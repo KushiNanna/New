@@ -37,10 +37,10 @@ jobs:
     # Create imagepullsecret for Azure Container registry (ACR)
     - uses: azure/k8s-create-secret@v1
       with:
-        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-url: ${{ env.CONTAINER_REGISTRY }}.azurecr.io
         container-registry-username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
-        secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
+        secret-name: ${{ env.CONTAINER_REGISTRY }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
     
     # Create generic secrets to be available on pods
