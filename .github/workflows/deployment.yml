@@ -48,7 +48,7 @@ jobs:
       with:
         namespace: ${{ env.NAMESPACE }}
         secret-type: 'generic'
-        arguments: --from-literal=config_service_password=${{ secrets.CONFIG_SERVICE_PASSWORD }} --from-literal=notification_service_password=${{ secrets.NOTIFICATION_SERVICE_PASSWORD }} --from-literal=statistics_service_password=${{ secrets.STATISTICS_SERVICE_PASSWORD }} --from-literal=account_service_password=${{ secrets.ACCOUNT_SERVICE_PASSWORD }} --from-literal=rabbitmq_password=${{ secrets.RABBITMQ_PASSWORD }} --from-literal=mongodb_uri=${{ secrets.MONGODB_URI }}  --from-literal=mongodb_database=${{ secrets.MONGODB_DATABASE }} --from-literal=rabbitmq_username=${{ secrets.RABBITMQ_USERNAME }} --from-literal=rabbitmq_host=${{ secrets.RABBITMQ_HOST }} --from-literal=rabbitmq_port=${{ secrets.RABBITMQ_PORT }}  
+        arguments: --from-literal=config_service_password=${{ secrets.CONFIG_SERVICE_PASSWORD }} --from-literal=notification_service_password=${{ secrets.NOTIFICATION_SERVICE_PASSWORD }} --from-literal=statistics_service_password=${{ secrets.STATISTICS_SERVICE_PASSWORD }} --from-literal=account_service_password=${{ secrets.ACCOUNT_SERVICE_PASSWORD }} --from-literal=rabbitmq_password=${{ secrets.RABBITMQ_PASSWORD }} --from-literal=mongodb_uri=${{ secrets.MONGODB_URI }}  --from-literal=mongodb_database=${{ secrets.MONGODB_DATABASE }} --from-literal=rabbitmq_username=${{ secrets.RABBITMQ_USERNAME }} --from-literal=rabbitmq_host=${{ secrets.RABBITMQ_HOST }} --from-literal=rabbitmq_port=${{ secrets.RABBITMQ_PORT }}  --from-literal=notification_email_user=${{ secrets.NOTIFICATION_EMAIL_USER }} --from-literal=notification_email_pass=${{ secrets.NOTIFICATION_EMAIL_PASSWORD }}  
         secret-name: piggymetrics
     
      # Start an instance of Spring Cloud Config
@@ -56,7 +56,14 @@ jobs:
      # Deploy app to AKS
     - uses: azure/k8s-deploy@replaceLogic
       with:
-        manifests: kubernetes/*.yaml 
+        manifests: |
+          kubernetes/1-config.yaml
+          kubernetes/2-registry.yaml
+          kubernetes/3-gateway.yaml
+          kubernetes/4-auth-service.yaml
+          kubernetes/5-account-service.yaml
+          kubernetes/6-statistics-service.yaml
+          kubernetes/7-notification-service.yaml
         imagepullsecrets: |
           ${{ env.CONTAINER_REGISTRY }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
