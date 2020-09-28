@@ -100,7 +100,7 @@ stages:
             displayName: Fetch secrets from Azure Key vault
             inputs:
               azureSubscription: 'arm-workshop-demo'
-              KeyVaultName: 'kv-java-demo'
+              KeyVaultName: 'kv-joedayz-demo'
               SecretsFilter: '*'
           
           - task: replacetokens@3
