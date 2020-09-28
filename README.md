@@ -545,10 +545,37 @@ There are some additional prerequisites for this automation:
 - [GitHub Account](https://github.com/)
 - [Azure DevOps Organization](https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started/pipelines-sign-up?view=azure-devops)
 - [Environment with AKS resource](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/environments-kubernetes?view=azure-devops#azure-kubernetes-service) which creates a service account in the chosen cluster and namespace, which will be used by Azure DevOps account to deploy to AKS
+
+![](./media/azure-resource-environment.jpg)
+
 - [Azure service connection using service principal](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops#create-an-azure-resource-manager-service-connection-with-an-existing-service-principal) to establish authentication between Azure & Azure DevOps services
+
+![](./media/kubernetes-service-connection.jpg)
+
 > [!Important]
    > To simplify the service connection, use the same email address for Azure DevOps as you use for Azure.
-- Create an Azure KeyVault and upload secrets. Ensure the service principal used in the service connection above has GET, LIST [permissions](https://docs.microsoft.com/en-us/cli/azure/keyvault?view=azure-cli-latest#az-keyvault-set-policy) on the vault. Use below command for that:
+- Create an Azure KeyVault and upload secrets. 
+
+![](./media/kv-java-demo.jpg)
+
+```
+AZURE-REGISTRY-USERNAME=00000000-0000-0000-0000-000000000000
+AZURE-REGISTRY-PASSWORD=<Token obtained according to instrucciones in it url: https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication>
+``` 
+
+Ensure the service principal used in the service connection above has GET, LIST [permissions](https://docs.microsoft.com/en-us/cli/azure/keyvault?view=azure-cli-latest#az-keyvault-set-policy) on the vault. Use below command for that:
+
+```
+$KV_NAME = kv_java_demo
+<clientId from the Azure SPN JSON> is obtained from the Azure Resource Manager created earlier.
+```
+
+![](./media/azure-resource-manager-get-principal.jpg)
+
+Next, you must to copy the cliente Id.
+
+![](./media/client-id-service-principal.jpg)
+
 ```
 az keyvault set-policy -n $KV_NAME --secret-permissions get list --spn <clientId from the Azure SPN JSON>
 ```  
