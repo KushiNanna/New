@@ -11,7 +11,7 @@ urlFragment: "java-on-aks"
 # End-to-end experience - Java on AKS
 
 > [!NOTE]
-> For Spring Boot applications, we recommend using Azure Spring Apps. However, you can still use Azure Kubernetes Service as a destination
+> For Spring Boot applications, we recommend using Azure Spring Apps. However, you can still use Azure Kubernetes Service as a destination. See [Java Workload Destination Guide](https://aka.ms/javadestinations) for advice.
 
 ![](https://github.com/actions/java-on-aks/workflows/Build%20%26%20Deploy%20to%20AKS/badge.svg)
 
